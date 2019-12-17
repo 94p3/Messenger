@@ -3,22 +3,27 @@ from time import sleep
 
 host = socket.gethostname()
 port = 12345
-backlog = 5
+backlog = 2
 size = 1024
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host,port))
 s.listen(backlog)
 
-client, address = s.accept()
+client1, address = s.accept()
+client2, address = s.accept()
 
 
-seconds_left = 6000
+
+seconds_left = 60000
 while seconds_left > 0:
-    data = client.recv(size)
-    print(data.decode('utf-8'))
-    if 'log' in data.decode('utf-8'):
-        client.send(bytes('1', 'utf8'))
-    else:
-        client.send(bytes('0','utf8'))
+
+    data1 = client1.recv(size)
+    data2 = client2.recv(size)
+    print(data1.decode('utf8'))
+    print(data2.decode('utf8'))
+    client1.send(data2)
+    client2.send(data1)
+
     seconds_left -= 1
     sleep(1)
+
