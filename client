@@ -1,5 +1,5 @@
 import socket
-from interface import *
+from edit1 import *
 from tkinter import *
 
 text = open('text.txt', 'r')
@@ -12,7 +12,7 @@ s = socket.socket()
 host = socket.gethostname()
 port = 12345
 s.connect((host, port))
-
+Mess.configure(state = NORMAL)
 
 IP = '0'
 mess = ""
@@ -142,10 +142,12 @@ def signin1():
     root2.mainloop()
 
 def reload():
-    s.send(bytes(log, 'utf8'))
-    print(s.recv(1024).decode('utf8') )
-    if '1' in s.recv(1024).decode('utf8'):
-        unlock()
+
+    Mss.configure(state=NORMAL)
+    Mss.insert(INSERT, '\n' + s.recv(1024).decode('utf8'))
+    Mss.configure(state=DISABLED)
+
+
 
 def signin2(event):
     global login, password, log, pas
@@ -191,6 +193,7 @@ Send = But(root1, 'send', int(root1.winfo_screenwidth() / 100), 0, send1, 1, 1, 
 rel = But(root1,'Reload',0, 0, reload, 0, 0, 'nw')
 
 root1.config(menu=mainmenu)
+
 
 root1.mainloop()
 text.close()
