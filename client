@@ -1,5 +1,5 @@
 import socket
-from edit1 import *
+from interface import *
 from tkinter import *
 
 text = open('text.txt', 'r')
