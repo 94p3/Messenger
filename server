@@ -1,0 +1,24 @@
+import socket
+from time import sleep
+
+host = socket.gethostname()
+port = 12345
+backlog = 5
+size = 1024
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((host,port))
+s.listen(backlog)
+
+client, address = s.accept()
+
+
+seconds_left = 6000
+while seconds_left > 0:
+    data = client.recv(size)
+    print(data.decode('utf-8'))
+    if 'log' in data.decode('utf-8'):
+        client.send(bytes('1', 'utf8'))
+    else:
+        client.send(bytes('0','utf8'))
+    seconds_left -= 1
+    sleep(1)
